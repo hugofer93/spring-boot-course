@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: spring-boot-example
+  
+  # Configuración de PostgreSQL para Docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  
+  # Configuración de JPA/Hibernate
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# Configuración del servidor
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Configuración de Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Configuración de logging
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    com.example.demo: ${LOG_LEVEL:DEBUG}
+    org.springframework.web: ${LOG_LEVEL:DEBUG}
+    org.hibernate.SQL: ${LOG_LEVEL:DEBUG}
