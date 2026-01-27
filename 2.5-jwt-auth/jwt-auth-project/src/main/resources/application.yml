@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: jwt-auth-project
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+# Configuración JWT
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationAndValidationMustBeAtLeast256BitsLong}
+  expiration: ${JWT_EXPIRATION:86400000} # 24 horas en milisegundos
