@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: audit-trace-project
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+logging:
+  level:
+    root: ${LOG_LEVEL:-INFO}
+    com.example.demo: ${LOG_LEVEL:-DEBUG}
+    org.springframework.web: ${LOG_LEVEL:-DEBUG}

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: audit-trace-project
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: ${LOG_LEVEL:-INFO}
+    com.example.demo: ${LOG_LEVEL:-INFO}
+    org.springframework.web: ${LOG_LEVEL:-DEBUG}
