@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: external-api-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-docker}
+      - SPRING_CONFIG_LOCATION=${SPRING_CONFIG_LOCATION:-classpath:/application-docker.yml}
+      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+    restart: unless-stopped

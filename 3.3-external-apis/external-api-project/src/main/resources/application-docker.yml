@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: external-api-project
+
+server:
+  port: 8080
+
+# Configuración de APIs externas
+external:
+  apis:
+    jsonplaceholder:
+      base-url: https://jsonplaceholder.typicode.com
+      timeout:
+        connect: 5000
+        read: 10000
+    httpbin:
+      base-url: https://httpbin.org
+      timeout:
+        connect: 5000
+        read: 10000
+
+# Configuración de RestTemplate y WebClient
+http:
+  client:
+    timeout:
+      connect: 5000
+      read: 10000
+    max-connections: 100
+    max-per-route: 20
+
+logging:
+  level:
+    com.example.demo: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.client: DEBUG
+    reactor.netty: DEBUG
