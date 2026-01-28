@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: testing-project
+
+server:
+  port: ${SERVER_PORT:8080}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:-INFO}
+    com.example.demo: ${LOG_LEVEL:-INFO}
+    org.springframework: ${LOG_LEVEL:-WARN}

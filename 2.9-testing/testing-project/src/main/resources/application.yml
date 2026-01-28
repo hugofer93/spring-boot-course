@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: testing-project
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.demo: INFO
+    org.springframework: WARN

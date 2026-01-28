@@ -1,0 +1,18 @@
+version: '3.8'
+
+# Docker Compose para ejecutar pruebas
+# Uso: docker compose -f compose.test.yml run --rm test
+
+services:
+  test:
+    image: maven:3.9-eclipse-temurin-17
+    working_dir: /app
+    volumes:
+      - .:/app
+      - maven-cache:/root/.m2
+    command: mvn test
+    environment:
+      - MAVEN_OPTS=-Xmx512m
+
+volumes:
+  maven-cache:
