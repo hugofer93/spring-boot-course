@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: granular-auth-project
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8080
+
+# Configuración JWT
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationAndValidationMustBeAtLeast256BitsLong}
+  expiration: ${JWT_EXPIRATION:86400000} # 24 horas en milisegundos
+
+logging:
+  level:
+    com.example.demo: DEBUG
+    org.springframework.security: DEBUG

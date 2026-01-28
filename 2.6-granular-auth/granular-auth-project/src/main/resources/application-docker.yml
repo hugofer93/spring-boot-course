@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: granular-auth-project
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+logging:
+  level:
+    root: ${LOG_LEVEL:-INFO}
+    com.example.demo: ${LOG_LEVEL:-DEBUG}
+    org.springframework.security: ${LOG_LEVEL:-DEBUG}
