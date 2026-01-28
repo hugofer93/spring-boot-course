@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # Ruta para User Service
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=1
+        
+        # Ruta para Product Service
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 8080
+
+# Configuración de Eureka Client para Docker
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: api-gateway
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.netflix.eureka: INFO

@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: eureka-server
+
+server:
+  port: 8761
+
+# Configuración de Eureka Server para Docker
+eureka:
+  instance:
+    hostname: eureka-server
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+logging:
+  level:
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO

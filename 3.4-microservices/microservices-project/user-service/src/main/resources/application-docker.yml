@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: user-service
+
+server:
+  port: 8081
+
+# Configuración de Eureka Client para Docker
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: user-service
+
+logging:
+  level:
+    com.example.userservice: DEBUG
+    com.netflix.eureka: INFO

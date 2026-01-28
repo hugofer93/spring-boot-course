@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: eureka-server
+
+server:
+  port: 8761
+
+# Configuración de Eureka Server
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    # Eureka Server no se registra a sí mismo
+    register-with-eureka: false
+    # Eureka Server no necesita obtener el registro de otros servidores
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+logging:
+  level:
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
