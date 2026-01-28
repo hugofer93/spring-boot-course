@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: logging-project
+
+server:
+  port: 8080
+
+# Configuración de Spring Boot Actuator (monitoreo)
+management:
+  endpoints:
+    web:
+      exposure:
+        # Exponer endpoints de monitoreo
+        include: health,metrics,info
+      base-path: /actuator
+  endpoint:
+    health:
+      # Mostrar detalles completos del health check
+      show-details: always
+    metrics:
+      enabled: true
+  info:
+    # Información de la aplicación
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+
+# Información de la aplicación (para /actuator/info)
+info:
+  app:
+    name: ${spring.application.name}
+    description: Proyecto simple para entender logging y monitoreo
+    version: 1.0.0
+    encoding: ${project.build.sourceEncoding}
+    java:
+      version: ${java.version}
+
+# Configuración de logging
+logging:
+  # Nivel de logging por defecto (puede ser sobrescrito por logback-spring.xml)
+  level:
+    root: INFO
+    com.example.demo: DEBUG
+    org.springframework: INFO
+  
+  # Ruta donde se guardan los archivos de log
+  file:
+    path: logs
+    name: logs/application.log

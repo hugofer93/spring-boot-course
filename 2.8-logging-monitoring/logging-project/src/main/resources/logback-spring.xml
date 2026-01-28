@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Propiedades para uso en la configuración -->
+    <property name="LOG_PATH" value="${LOG_PATH:-logs}"/>
+    <property name="LOG_FILE" value="${LOG_FILE:-application}"/>
+
+    <!-- Appender para consola con formato coloreado -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Formato: fecha hora [thread] nivel logger - mensaje -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para archivo con rotación diaria -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE}.log</file>
+        
+        <!-- Política de rotación: archivo nuevo cada día -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Archivo rotado con fecha: application-2024-01-27.log -->
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Mantener logs por 30 días -->
+            <maxHistory>30</maxHistory>
+            <!-- Tamaño máximo total de logs: 1GB -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        
+        <encoder>
+            <!-- Formato más detallado para archivo -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para archivo de errores (solo ERROR) -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE}-error.log</file>
+        
+        <!-- Filtrar solo logs de nivel ERROR -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE}-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Configuración de niveles por paquete -->
+    
+    <!-- Nivel DEBUG para nuestra aplicación (solo en desarrollo) -->
+    <logger name="com.example.demo" level="DEBUG"/>
+    
+    <!-- Nivel INFO para Spring Framework (reducir ruido) -->
+    <logger name="org.springframework" level="INFO"/>
+    
+    <!-- Nivel WARN para librerías de terceros -->
+    <logger name="org.apache" level="WARN"/>
+    <logger name="com.zaxxer" level="WARN"/>
+
+    <!-- Root logger: nivel INFO por defecto -->
+    <!-- En producción, cambiar a INFO o WARN -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+
+    <!-- Perfiles de Spring -->
+    
+    <!-- Perfil de desarrollo: más verboso -->
+    <springProfile name="dev">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <!-- Perfil de Docker: logs en consola y archivo -->
+    <springProfile name="docker">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        <!-- Nivel DEBUG para nuestra aplicación en Docker -->
+        <logger name="com.example.demo" level="DEBUG"/>
+    </springProfile>
+
+    <!-- Perfil de producción: menos verboso -->
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        <!-- En producción, no mostrar logs en consola -->
+    </springProfile>
+</configuration>
