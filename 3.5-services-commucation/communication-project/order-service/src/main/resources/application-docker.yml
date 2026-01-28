@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: order-service
+
+server:
+  port: 8082
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 10000
+      user-service:
+        connectTimeout: 5000
+        readTimeout: 10000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+  logging:
+    level: BASIC
+
+logging:
+  level:
+    com.example.orderservice: DEBUG
+    com.netflix.eureka: INFO
+    com.example.orderservice.client: DEBUG

@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: order-service
+
+server:
+  port: 8082
+
+# Configuración de Eureka Client
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Configuración de Feign Client
+feign:
+  client:
+    config:
+      default:
+        # Timeout de conexión (milisegundos)
+        connectTimeout: 5000
+        # Timeout de lectura (milisegundos)
+        readTimeout: 10000
+      # Configuración específica para user-service
+      user-service:
+        connectTimeout: 5000
+        readTimeout: 10000
+  # Habilitar compresión
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+  # Habilitar logging para debugging
+  logging:
+    level: BASIC
+
+logging:
+  level:
+    com.example.orderservice: DEBUG
+    com.netflix.eureka: INFO
+    # Logging detallado de Feign para debugging
+    com.example.orderservice.client: DEBUG
