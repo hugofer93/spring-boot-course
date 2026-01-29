@@ -1,0 +1,13 @@
+# Perfil Docker: apunta al Config Server por nombre de servicio (obligatorio: el cliente espera al server)
+spring:
+  config:
+    import: configserver:http://config-server:8888
+  cloud:
+    config:
+      fail-fast: true
+      retry:
+        max-attempts: 6
+        initial-interval: 2000
+
+server:
+  port: 8080

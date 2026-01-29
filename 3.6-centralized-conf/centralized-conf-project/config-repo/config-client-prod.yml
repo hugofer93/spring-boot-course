@@ -1,0 +1,11 @@
+# Perfil prod: configuración para producción
+app:
+  name: Config Client App (PROD)
+  description: "Entorno de producción"
+  features:
+    enabled: true
+    maxItems: 200
+
+custom:
+  greeting: "Hola desde PRODUCCIÓN"
+  version: "1.0.0"

@@ -1,0 +1,11 @@
+# Perfil dev: configuración para desarrollo
+app:
+  name: Config Client App (DEV)
+  description: "Entorno de desarrollo"
+  features:
+    enabled: true
+    maxItems: 50
+
+custom:
+  greeting: "Hola desde DEV"
+  version: "1.0.0-dev"

@@ -1,0 +1,17 @@
+# Perfil Docker: config desde la carpeta montada config-repo (sin Git)
+server:
+  port: 8888
+
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:/app/config-repo
+        health:
+          enabled: true  # Habilita el healthcheck de Docker, se verifica cada 10s
+
+# Evita logs repetidos cada 10s (healthcheck de Docker consulta el repo)
+# logging:
+#   level:
+#     org.springframework.cloud.config.server.environment.NativeEnvironmentRepository: WARN

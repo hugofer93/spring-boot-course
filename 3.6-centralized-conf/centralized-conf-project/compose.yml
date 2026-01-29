@@ -1,0 +1,44 @@
+services:
+  config-server:
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      # Repo de config montado: editas los YAML en tu máquina y el server los lee
+      - ./config-repo:/app/config-repo
+    environment:
+      # native = backend de config; docker = usa la carpeta montada config-repo
+      - SPRING_PROFILES_ACTIVE=native,docker
+    networks:
+      - config-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+
+  config-client:
+    build:
+      context: ./config-client
+      dockerfile: Dockerfile
+    container_name: config-client
+    ports:
+      - "8080:8080"
+    environment:
+      # Perfil de config: docker (base) | dev | stag | prod
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - config-network
+    depends_on:
+      config-server:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  config-network:
+    driver: bridge

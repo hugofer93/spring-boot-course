@@ -1,0 +1,11 @@
+# Configuración específica para la aplicación "config-client"
+app:
+  name: Config Client App
+  description: "Aplicación que obtiene su configuración del Config Server"
+  features:
+    enabled: true
+    maxItems: 100
+
+custom:
+  greeting: "Hola desde configuración centralizada"
+  version: "1.0.0"

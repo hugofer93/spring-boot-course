@@ -1,0 +1,11 @@
+# Perfil docker: configuración cuando se ejecuta en contenedores
+app:
+  name: Config Client App (Docker)
+  description: "Entorno Docker - configuración del Config Server"
+  features:
+    enabled: true
+    maxItems: 100
+
+custom:
+  greeting: "Hola desde configuración de Docker"
+  version: "1.0.0-docker"

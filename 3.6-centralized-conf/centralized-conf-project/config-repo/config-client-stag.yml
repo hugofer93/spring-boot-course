@@ -1,0 +1,11 @@
+# Perfil stag: configuración para staging
+app:
+  name: Config Client App (STAGING)
+  description: "Entorno de staging"
+  features:
+    enabled: true
+    maxItems: 100
+
+custom:
+  greeting: "Hola desde STAGING"
+  version: "1.0.0-stag"

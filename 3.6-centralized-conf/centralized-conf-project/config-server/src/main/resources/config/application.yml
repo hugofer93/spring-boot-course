@@ -1,0 +1,5 @@
+# Configuración compartida para todas las aplicaciones que consumen este Config Server
+app:
+  shared:
+    message: "Configuración compartida desde Config Server"
+    environment: default
