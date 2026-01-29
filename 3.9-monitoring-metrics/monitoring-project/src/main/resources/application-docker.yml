@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: monitoring-project
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,info,env
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    env:
+      # Muestra los valores de las variables de entorno
+      # "never" en producción
+      show-values: always
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: Demo de monitoreo con Actuator (Docker)
+    version: 1.0.0
+
+logging:
+  level:
+    root: INFO

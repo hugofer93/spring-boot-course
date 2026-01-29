@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: monitoring-project
+
+server:
+  port: 8080
+
+# Configuración de Spring Boot Actuator (monitoreo y métricas)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,info,env
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    env:
+      # Muestra los valores de las variables de entorno
+      # "never" en producción
+      show-values: always
+    metrics:
+      enabled: true
+  info:
+    env:
+      enabled: true
+
+# Información expuesta en /actuator/info
+info:
+  app:
+    name: ${spring.application.name}
+    description: Aplicación de ejemplo para monitoreo con Actuator y métricas
+    version: 1.0.0
+
+logging:
+  level:
+    root: INFO
+    com.example.demo: INFO
