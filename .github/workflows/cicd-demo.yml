@@ -1,0 +1,57 @@
+# =============================================================================
+# CI/CD de demostración - Curso Spring Boot
+# =============================================================================
+# Este workflow es didáctico: sirve para ver en GitHub Actions cómo se ejecuta
+# un pipeline al hacer push o abrir un Pull Request.
+#
+# Dónde ver la ejecución: Repo → pestaña "Actions" → elegir una ejecución.
+# =============================================================================
+
+name: 🎓 CI/CD Demo
+
+# Cuándo se ejecuta
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  demo:
+    name: Pipeline de demostración
+    runs-on: ubuntu-latest
+
+    steps:
+      # --- Paso 1: Obtener el código del repositorio ---
+      - name: 📥 Descargar código (Checkout)
+        uses: actions/checkout@v4
+
+      # --- Paso 2: Configurar Java (como en un proyecto real) ---
+      - name: ☕ Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # --- Paso 3: Paso demostrativo (podéis ver este output en los logs) ---
+      - name: 👋 Paso demostrativo
+        run: |
+          echo "=========================================="
+          echo "  ¡El pipeline se está ejecutando!"
+          echo "  Repo: ${{ github.repository }}"
+          echo "  Rama: ${{ github.ref_name }}"
+          echo "  Commit: ${{ github.sha }}"
+          echo "=========================================="
+          java -version
+
+      # --- Paso 4: Compilar y ejecutar tests de un proyecto del curso ---
+      - name: 🔨 Compilar y ejecutar tests (proyecto 3.10-cicd)
+        run: mvn -B -f 3.10-cicd/cicd-project/pom.xml clean verify
+
+      # --- Paso 5: Resumen visible en los logs ---
+      - name: ✅ Resumen
+        if: success()
+        run: |
+          echo "Pipeline completado correctamente."
+          echo "Revisa la pestaña Actions en GitHub para ver todos los pasos."
